@@ -8,6 +8,7 @@ class FirefoxHistory():
     def __init__(self):
         #   Results number
         self.limit = None
+        self.browser = ""
 
         #   Set history location
         history_location = self.searchPlaces()
@@ -23,16 +24,21 @@ class FirefoxHistory():
         self.conn.create_function('hostname',1,self.__getHostname)
 
     def searchPlaces(self):
-        #   Firefox folder path
-        firefox_path = os.path.join(os.environ['HOME'], '.mozilla/firefox/')
-        #   Firefox profiles configuration file path
-        conf_path = os.path.join(firefox_path,'profiles.ini')
+        if self.browser == "firefox":
+            #   Firefox folder path
+            browser_path = os.path.join(os.environ['HOME'], '.mozilla/firefox/')
+            #   Firefox profiles configuration file path
+            conf_path = os.path.join(browser_path,'profiles.ini')
+        elif self.browser == "librewolf":
+            browser_path = os.path.join(os.environ['HOME'], '.librewolf')
+            #   Librewolf profiles configuration file path
+            conf_path = os.path.join(browser_path,'profiles.ini')
         #   Profile config parse
         profile = configparser.RawConfigParser()
         profile.read(conf_path)
         prof_path = profile.get("Profile0", "Path")
         #   Sqlite db directory path
-        sql_path = os.path.join(firefox_path,prof_path)
+        sql_path = os.path.join(browser_path,prof_path)
         #   Sqlite db path
         return os.path.join(sql_path,'places.sqlite')
 

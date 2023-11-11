@@ -26,9 +26,12 @@ class PreferencesEventListener(EventListener):
         #   Results Number
         try:
             n = int(event.preferences['limit'])
+            browser = string(event.preferences['browser'])
         except:
             n = 10
+            browser = "firefox"
         extension.fh.limit = n
+        extension.fh.browser = browser
         
 class PreferencesUpdateEventListener(EventListener):
     def on_event(self,event,extension):
@@ -40,6 +43,12 @@ class PreferencesUpdateEventListener(EventListener):
             try:
                 n = int(event.new_value)
                 extension.fh.limit = n
+            except:
+                pass
+        elif event.id == 'browser':
+            try:
+                browser = string(event.new_value)
+                extension.fh.browser = browser
             except:
                 pass
         #elif event.id == 'aggregate':
