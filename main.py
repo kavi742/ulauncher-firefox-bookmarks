@@ -56,6 +56,10 @@ class PreferencesUpdateEventListener(EventListener):
                 pass
         #elif event.id == 'aggregate':
         #    extension.fh.aggregate = event.new_value
+    
+    class ItemEnterEventListener(EventListener):
+        def on_event(self, event, extension):
+            browser = extension.preferences.get("browser").lower()
 
 class SystemExitEventListener(EventListener):
     def on_event(self,event,extension):
