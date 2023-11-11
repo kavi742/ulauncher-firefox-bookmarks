@@ -26,11 +26,14 @@ class PreferencesEventListener(EventListener):
         #   Results Number
         try:
             n = int(event.preferences['limit'])
-            browser = string(event.preferences['browser'])
         except:
             n = 10
-            browser = "firefox"
         extension.fh.limit = n
+        #   Browser Selection
+        try:
+            browser = string(event.preferences['browser'])
+        except:
+            browser = "firefox"
         extension.fh.browser = browser
         
 class PreferencesUpdateEventListener(EventListener):
@@ -45,7 +48,7 @@ class PreferencesUpdateEventListener(EventListener):
                 extension.fh.limit = n
             except:
                 pass
-        elif event.id == 'browser':
+        if event.id == 'browser':
             try:
                 browser = string(event.new_value)
                 extension.fh.browser = browser
